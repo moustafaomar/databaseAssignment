@@ -1,4 +1,16 @@
 import mysql.connector
+def output():
+    print('''
+            1.Add new doctor
+            2.Add new patient
+            3.Relate patient and doctor
+            4.View list of doctors names
+            5.View list of patients names
+            6.View list of patient and corresponding doctor
+            7.Terminate a patient doctor relationship
+            8.View patients names supervised by selected doctor
+            9.View doctors names supervises a selected patient
+    ''')
 def SQL_CONN():
     mydb = mysql.connector.connect(
     host="localhost",
@@ -28,42 +40,32 @@ def relate():
     Values = (DID,PID)
     conn.execute(Query,Values)
 def ViewDoctors():
-    Query = "SELECT name FROM doctors"
+    Query = "SELECT * FROM doctors"
     conn.execute(Query)
 def ViewPatients():
-    Query = "SELECT name FROM patients"
+    Query = "SELECT * FROM patients"
     conn.execute(Query)
 def ViewPatientsAndDoctors():
-    Query = "SELECT patients.name,doctors.name FROM patients JOIN doc_pat ON patients.id = P_code JOIN doctors ON doctors.id = D_code"
+    Query = "SELECT * FROM patients JOIN doc_pat ON patients.id = P_code JOIN doctors ON doctors.id = D_code"
     conn.execute(Query)
 def TerminateRelation():
     PID = input("Please Enter Patient ID:")
     DID = input("Please Enter Doctor ID:")
-    Query = "DELETE FROM doc_pat WHERE D_code = DID AND P_code = PID"
+    Query = "DELETE FROM doc_pat WHERE D_code = %s AND P_code = %s"
     Values = (DID,PID)
     conn.execute(Query,Values)
 def PatientsOfDoctor():
     DID = input("Please Enter Doctor ID:")
-    Query = "SELECT patients.name FROM patients JOIN doc_pat ON patients.id = P_code JOIN doctors ON doctors.id = D_code WHERE D_code = %s"
-    Values = (DID)
+    Query = "SELECT * FROM patients JOIN doc_pat ON patients.id = P_code JOIN doctors ON doctors.id = D_code WHERE D_code = %s"
+    Values = (DID,)
     conn.execute(Query,Values)
 def DoctorsOfPatient():
     PID = input("Please Enter Patient ID:")
-    Query = "SELECT patients.name FROM patients JOIN doc_pat ON patients.id = P_code JOIN doctors ON doctors.id = D_code WHERE P_code = %s"
-    Values = (PID)
+    Query = "SELECT * FROM patients JOIN doc_pat ON patients.id = P_code JOIN doctors ON doctors.id = D_code WHERE P_code = %s"
+    Values = (PID,)
     conn.execute(Query,Values)
 def Main():
-    print('''
-        1.Add new doctor
-        2.Add new patient
-        3.Relate patient and doctor
-        4.View list of doctors names
-        5.View list of patients names
-        6.View list of patient and corresponding doctor
-        7.Terminate a patient doctor relationship
-        8.View patients names supervised by selected doctor
-        9.View doctors names supervises a selected patient
-    ''')
+    output()
     selection = input()
     while selection!='EXIT':
         selection = int(selection)
@@ -93,17 +95,7 @@ def Main():
                 print(x)
         else:
             db.commit()
-        print('''
-        1.Add new doctor
-        2.Add new patient
-        3.Relate patient and doctor
-        4.View list of doctors names
-        5.View list of patients names
-        6.View list of patient and corresponding doctor
-        7.Terminate a patient doctor relationship
-        8.View patients names supervised by selected doctor
-        9.View doctors names supervises a selected patient
-        ''')
+        output()
         selection = input()
 [conn,db] = SQL_CONN()
 Main()
