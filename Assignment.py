@@ -40,13 +40,13 @@ def relate():
     Values = (DID,PID)
     conn.execute(Query,Values)
 def ViewDoctors():
-    Query = "SELECT * FROM doctors"
+    Query = "SELECT name FROM doctors"
     conn.execute(Query)
 def ViewPatients():
-    Query = "SELECT * FROM patients"
+    Query = "SELECT name FROM patients"
     conn.execute(Query)
 def ViewPatientsAndDoctors():
-    Query = "SELECT * FROM patients JOIN doc_pat ON patients.id = P_code JOIN doctors ON doctors.id = D_code"
+    Query = "SELECT patients.name,doctors.name FROM patients JOIN doc_pat ON patients.id = P_code JOIN doctors ON doctors.id = D_code"
     conn.execute(Query)
 def TerminateRelation():
     PID = input("Please Enter Patient ID:")
@@ -56,12 +56,12 @@ def TerminateRelation():
     conn.execute(Query,Values)
 def PatientsOfDoctor():
     DID = input("Please Enter Doctor ID:")
-    Query = "SELECT * FROM patients JOIN doc_pat ON patients.id = P_code JOIN doctors ON doctors.id = D_code WHERE D_code = %s"
+    Query = "SELECT patients.name FROM patients JOIN doc_pat ON patients.id = P_code JOIN doctors ON doctors.id = D_code WHERE D_code = %s"
     Values = (DID,)
     conn.execute(Query,Values)
 def DoctorsOfPatient():
     PID = input("Please Enter Patient ID:")
-    Query = "SELECT * FROM patients JOIN doc_pat ON patients.id = P_code JOIN doctors ON doctors.id = D_code WHERE P_code = %s"
+    Query = "SELECT doctors.name FROM patients JOIN doc_pat ON patients.id = P_code JOIN doctors ON doctors.id = D_code WHERE P_code = %s"
     Values = (PID,)
     conn.execute(Query,Values)
 def Main():
