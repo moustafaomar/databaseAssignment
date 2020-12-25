@@ -4,9 +4,7 @@ mydb = mysql.connector.connect(
     user="root",
     passwd="",
     database="databasesubmissions",
-    connect_timeout=1000 ,
-    wait_timeout=28800 ,
-    interactive_timeout=28800
+    connect_timeout=1000 
     )
 mycursor = mydb.cursor()
 mycursor.execute("CREATE TABLE Doctors (name VARCHAR(255),department VARCHAR(255), id INT, PRIMARY KEY(id))")
