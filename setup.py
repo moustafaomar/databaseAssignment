@@ -1,6 +1,6 @@
 import mysql.connector
 mydb = mysql.connector.connect(
-    host="mysql",
+    host="localhost",
     user="root",
     passwd="",
     database="databasesubmissions",
