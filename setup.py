@@ -3,9 +3,8 @@ mydb = mysql.connector.connect(
     host="localhost",
     user="root",
     passwd="",
-    database="sdatabaseSubmissions"
+    database="databasesubmissions"
     )
-mycursor = mydb.cursor()
 mycursor = mydb.cursor()
 mycursor.execute("CREATE TABLE Doctors (name VARCHAR(255),department VARCHAR(255), id INT, PRIMARY KEY(id))")
 mycursor.execute("CREATE TABLE Patients (name VARCHAR(255), id INT, PRIMARY KEY(id))")
