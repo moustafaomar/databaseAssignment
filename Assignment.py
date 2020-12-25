@@ -34,7 +34,7 @@ def db_exec(query, params=None):
             return True
     return False
 def AddDoctor(DName,DDep,DID):
-    Query = "INSERT INTO Doctors (name,department,id) VALUES (%s,%s,%s)"
+    Query = "INSERT INTO doctors (name,department,id) VALUES (%s,%s,%s)"
     Values = (DName,DDep,DID)
     if(db_exec(conn.execute(Query,Values),Values)):
         return True
