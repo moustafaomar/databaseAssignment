@@ -19,7 +19,7 @@ def SQL_CONN():
     passwd="",
     database="databaseSubmissions"
     )
-    conn = mydb.cursor()
+    conn = mydb.cursor(buffered=True)
     return [conn,mydb]
 def db_exec(query, params=None):
     if not params:
