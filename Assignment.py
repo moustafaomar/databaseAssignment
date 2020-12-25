@@ -97,7 +97,10 @@ def Main():
     output()
     selection = input()
     while selection!='EXIT':
-        selection = int(selection)
+        try:
+            selection = int(selection)
+        except:
+            print("Cannot take strings.")
         if selection not in range(1,10):
             return
         elif selection==1:
