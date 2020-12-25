@@ -1,7 +1,7 @@
 import Assignment
 import unittest
 
-class TestStringMethods(unittest.TestCase):
+class TestAssignmentMethods(unittest.TestCase):
     def test_conn(self):
         self.assertTrue(Assignment.SQL_CONN())
     def test_add_doctor(self):
