@@ -16,7 +16,7 @@ jobs:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
           MYSQL_DATABASE: databaseSubmissions
         ports:
-            - 3306
+            - 3306:3306
     steps:
       - uses: actions/checkout@v2
       - name: Install Python 3
