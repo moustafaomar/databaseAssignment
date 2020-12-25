@@ -10,6 +10,7 @@ def output():
             7.Terminate a patient doctor relationship
             8.View patients names supervised by selected doctor
             9.View doctors names supervises a selected patient
+            EXIT: exit application
     ''')
 def SQL_CONN():
     mydb = mysql.connector.connect(
