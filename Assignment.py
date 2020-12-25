@@ -98,7 +98,7 @@ def Main():
     selection = input()
     while selection!='EXIT':
         selection = int(selection)
-        if selection not in range(0,10):
+        if selection not in range(1,10):
             return
         elif selection==1:
             DName = input("Please Enter Doctor Name:")
