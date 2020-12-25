@@ -17,7 +17,7 @@ def SQL_CONN():
     host="localhost",
     user="root",
     passwd="",
-    database="sdatabaseSubmissions"
+    database="databaseSubmissions"
     )
     conn = mydb.cursor(buffered=True)
     return [conn,mydb]
