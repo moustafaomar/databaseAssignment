@@ -19,52 +19,80 @@ def SQL_CONN():
     passwd="",
     database="databaseSubmissions"
     )
-    conn = mydb.cursor()
+    conn = mydb.cursor(buffered=True)
     return [conn,mydb]
-def AddDoctor():
-    DName = input("Please Enter Doctor Name:")
-    DDep = input("Please Enter Doctor Department:")
-    DID = input("Please Enter Doctor ID:")
+def db_exec(query, params=None):
+    if not params:
+        result = conn.fetchall()
+        for x in result:
+            print(x)
+        if(result):
+            return True
+    else:
+        db.commit()
+        if(conn.rowcount > 0):
+            return True
+    return False
+def AddDoctor(DName,DDep,DID):
     Query = "INSERT INTO Doctors (name,department,id) VALUES (%s,%s,%s)"
     Values = (DName,DDep,DID)
-    conn.execute(Query,Values)
-def AddPatient():
-    PName = input("Please Enter Patient Name:")
-    PID = input("Please Enter Patient ID:")
+    if(db_exec(conn.execute(Query,Values),Values)):
+        return True
+    else:
+        return False
+def AddPatient(PName,PID):
     Query = "INSERT INTO patients(name,id) VALUES (%s,%s)"
     Values = (PName,PID)
-    conn.execute(Query,Values)
-def relate():
-    PID = input("Please Enter Patient ID:")
-    DID = input("Please Enter Doctor ID:")
+    if(db_exec(conn.execute(Query,Values),Values)):
+        return True
+    else:
+        return False
+def relate(DID,PID):
     Query = "INSERT INTO doc_pat(D_code,P_code) VALUES (%s,%s)"
     Values = (DID,PID)
-    conn.execute(Query,Values)
+    if(db_exec(conn.execute(Query,Values),Values)):
+        return True
+    else:
+        return False
 def ViewDoctors():
     Query = "SELECT name FROM doctors"
-    conn.execute(Query)
+    if(db_exec(conn.execute(Query))):
+        return True
+    else:
+        return False
 def ViewPatients():
     Query = "SELECT name FROM patients"
-    conn.execute(Query)
+    if(db_exec(conn.execute(Query))):
+        return True
+    else:
+        return False
 def ViewPatientsAndDoctors():
     Query = "SELECT patients.name,doctors.name FROM patients JOIN doc_pat ON patients.id = P_code JOIN doctors ON doctors.id = D_code"
-    conn.execute(Query)
-def TerminateRelation():
-    PID = input("Please Enter Patient ID:")
-    DID = input("Please Enter Doctor ID:")
+    if(db_exec(conn.execute(Query))):
+        return True
+    else:
+        return False
+def TerminateRelation(DID,PID):
     Query = "DELETE FROM doc_pat WHERE D_code = %s AND P_code = %s"
     Values = (DID,PID)
-    conn.execute(Query,Values)
-def PatientsOfDoctor():
-    DID = input("Please Enter Doctor ID:")
+    if(db_exec(conn.execute(Query,Values),Values)):
+        return True
+    else:
+        return False
+def PatientsOfDoctor(DID):
     Query = "SELECT patients.name FROM patients JOIN doc_pat ON patients.id = P_code JOIN doctors ON doctors.id = D_code WHERE D_code = %s"
     Values = (DID,)
-    conn.execute(Query,Values)
-def DoctorsOfPatient():
-    PID = input("Please Enter Patient ID:")
+    if(db_exec(conn.execute(Query,Values),Values)):
+        return True
+    else:
+        return False
+def DoctorsOfPatient(PID):
     Query = "SELECT doctors.name FROM patients JOIN doc_pat ON patients.id = P_code JOIN doctors ON doctors.id = D_code WHERE P_code = %s"
     Values = (PID,)
-    conn.execute(Query,Values)
+    if(db_exec(conn.execute(Query,Values),Values)):
+        return True
+    else:
+        return False
 def Main():
     output()
     selection = input()
@@ -73,11 +101,18 @@ def Main():
         if selection not in range(0,10):
             return
         elif selection==1:
-            AddDoctor()
+            DName = input("Please Enter Doctor Name:")
+            DDep = input("Please Enter Doctor Department:")
+            DID = input("Please Enter Doctor ID:")
+            AddDoctor(DName,DDep,DID)
         elif selection==2:
-            AddPatient()
+            PName = input("Please Enter Patient Name:")
+            PID = input("Please Enter Patient ID:")
+            AddPatient(PName,PID)
         elif selection==3:
-            relate()
+            PID = input("Please Enter Patient ID:")
+            DID = input("Please Enter Doctor ID:")
+            relate(DID,PID)
         elif selection==4:
             ViewDoctors()
         elif selection==5:
@@ -85,18 +120,17 @@ def Main():
         elif selection==6:
             ViewPatientsAndDoctors()
         elif selection==7:
-            TerminateRelation()
+            PID = input("Please Enter Patient ID:")
+            DID = input("Please Enter Doctor ID:")
+            TerminateRelation(DID,PID)
         elif selection==8:
-            PatientsOfDoctor()
+            DID = input("Please Enter Doctor ID:")
+            PatientsOfDoctor(DID)
         elif selection==9:
-            DoctorsOfPatient()
-        if selection == 4 or selection == 5 or selection == 6 or selection ==8 or selection==9:
-            result = conn.fetchall()
-            for x in result:
-                print(x)
-        else:
-            db.commit()
+            PID = input("Please Enter Patient ID:")
+            DoctorsOfPatient(PID)
         output()
         selection = input()
 [conn,db] = SQL_CONN()
-Main()
+if __name__ == "__main__":
+    Main()
