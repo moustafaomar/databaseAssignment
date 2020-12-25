@@ -25,9 +25,9 @@ jobs:
         with:
           mysql database: 'databasesubmissions'
           mysql root password: ''  
-          mysql user: 'root'
+          mysql user: 'test'
           mysql password: '123456'
       - name: Setup Database 
-        run: mysql use databasesubmissions;CREATE TABLE Doctors (name VARCHAR(255),department VARCHAR(255), id INT, PRIMARY KEY(id));CREATE TABLE Patients (name VARCHAR(255), id INT, PRIMARY KEY(id));CREATE TABLE DOC_PAT ( D_code INT, P_code INT, FOREIGN KEY (P_code) REFERENCES Patients(id),FOREIGN KEY (D_code) REFERENCES Doctors(id));
+        run: mysql -u test -p 123456 use databasesubmissions;CREATE TABLE Doctors (name VARCHAR(255),department VARCHAR(255), id INT, PRIMARY KEY(id));CREATE TABLE Patients (name VARCHAR(255), id INT, PRIMARY KEY(id));CREATE TABLE DOC_PAT ( D_code INT, P_code INT, FOREIGN KEY (P_code) REFERENCES Patients(id),FOREIGN KEY (D_code) REFERENCES Doctors(id));
       - name: Run tests with pytest
         run: python -m unittest 
